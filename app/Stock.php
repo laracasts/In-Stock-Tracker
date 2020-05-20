@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Events\NowInStock;
+
 class Stock extends Model
 {
     protected $table = 'stock';
@@ -15,6 +17,10 @@ class Stock extends Model
         $status = $this->retailer
             ->client()
             ->checkAvailability($this);
+
+        if (! $this->in_stock && $status->available) {
+            event(new NowInStock($this));
+        }
 
         $this->update([
             'in_stock' => $status->available,
