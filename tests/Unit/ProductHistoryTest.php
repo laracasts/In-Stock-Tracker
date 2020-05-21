@@ -4,9 +4,7 @@ namespace Tests\Unit;
 
 use App\Product;
 use Tests\TestCase;
-use App\Clients\StockStatus;
 use RetailerWithProductSeeder;
-use Facades\App\Clients\ClientFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProductHistoryTest extends TestCase

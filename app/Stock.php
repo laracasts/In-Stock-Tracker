@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Events\NowInStock;
+use App\UseCases\TrackStock;
 
 class Stock extends Model
 {
@@ -12,22 +12,9 @@ class Stock extends Model
         'in_stock' => 'boolean'
     ];
 
-    public function track($callback = null)
+    public function track()
     {
-        $status = $this->retailer
-            ->client()
-            ->checkAvailability($this);
-
-        if (! $this->in_stock && $status->available) {
-            event(new NowInStock($this));
-        }
-
-        $this->update([
-            'in_stock' => $status->available,
-            'price' => $status->price
-        ]);
-
-        $callback && $callback($this);
+        TrackStock::dispatch($this);
     }
 
     public function retailer()
