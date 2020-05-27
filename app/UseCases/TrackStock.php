@@ -17,7 +17,7 @@ class TrackStock implements ShouldQueue
 
     protected Stock $stock;
 
-    protected StockStatus $status;
+    protected ?StockStatus $status = null;
 
     public function __construct(Stock $stock)
     {
